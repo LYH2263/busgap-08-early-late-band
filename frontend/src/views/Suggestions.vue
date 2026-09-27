@@ -6,9 +6,13 @@ onMounted(async () => { tips.value = (await api('/reports/suggestions?line_id=1'
 </script>
 <template>
   <h1>建议</h1>
-  <p class="sub">针对串车与大间隔的调班提示</p>
+  <p class="sub">针对串车、大间隔与偏离班次的调班提示</p>
   <div class="card" v-for="(t,i) in tips" :key="i">
-    <div><strong>{{ t.stop_name }}</strong> · {{ t.earlier_trip }} → {{ t.later_trip }} · 间隔 {{ t.gap_min }} 分</div>
+    <div v-if="t.status === 'deviation'">
+      <strong>{{ t.stop_name }}</strong> · {{ t.trip_no }} · 偏差 {{ t.deviation_min }} 分
+      <span class="badge badge-deviate">偏离</span>
+    </div>
+    <div v-else><strong>{{ t.stop_name }}</strong> · {{ t.earlier_trip }} → {{ t.later_trip }} · 间隔 {{ t.gap_min }} 分</div>
     <p class="muted">{{ t.suggestion }}</p>
   </div>
   <p v-if="!tips.length" class="muted">暂无异常建议</p>

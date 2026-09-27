@@ -9,6 +9,7 @@
   --bg-amber: #ffb020;
   --bg-red: #ff4d6d;
   --bg-ok: #3dd68c;
+  --bg-violet: #b78bff;
 }
 
 * { box-sizing: border-box; }
@@ -133,6 +134,7 @@ h1 { margin: 0 0 0.25rem; font-size: 1.25rem; font-weight: 700; }
 }
 .bg-gap-strip.bg-bunch { border-top-color: var(--bg-red); }
 .bg-gap-strip.bg-large { border-top-color: var(--bg-amber); }
+.bg-gap-strip.bg-deviate { border-top-color: var(--bg-violet); }
 .bg-gap-strip header {
   padding: 0.65rem 0.7rem 0.4rem;
   font-size: 0.8rem; font-weight: 700;
@@ -163,6 +165,12 @@ th { color: var(--bg-dim); font-weight: 600; font-size: 0.78rem; }
 .badge-ok { background: rgba(61,214,140,0.18); color: var(--bg-ok); }
 .badge-warn { background: rgba(255,176,32,0.18); color: var(--bg-amber); }
 .badge-bad { background: rgba(255,77,109,0.18); color: var(--bg-red); }
+.badge-deviate { background: rgba(183,139,255,0.18); color: var(--bg-violet); }
+.band-input {
+  width: 5.5rem; background: #0a1a26; color: var(--bg-text);
+  border: 1px solid var(--bg-edge); padding: 0.25rem 0.4rem; font-size: 0.85rem;
+}
+.band-input:focus { outline: 1px solid var(--bg-cyan); }
 .btn {
   background: var(--bg-cyan); color: #041018; border: none;
   padding: 0.45rem 0.95rem; font-weight: 700; cursor: pointer; font-size: 0.85rem;

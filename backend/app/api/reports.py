@@ -22,9 +22,11 @@ def run_detection(line_id: int, stop_name: str | None = None, db: Session = Depe
     trip_ids = [t.id for t in trips]
     trip_no_map = {t.id: t.trip_no for t in trips}
     arrivals = db.scalars(select(Arrival).where(Arrival.trip_id.in_(trip_ids))).all()
-    payload = [{"stop_name": a.stop_name, "trip_no": trip_no_map[a.trip_id], "actual_arrive": a.actual_arrive}
+    payload = [{"stop_name": a.stop_name, "trip_no": trip_no_map[a.trip_id],
+                "actual_arrive": a.actual_arrive, "planned_arrive": a.planned_arrive}
                for a in arrivals if stop_name is None or a.stop_name == stop_name]
-    events = detect_bunching(payload, line.planned_headway_min, line.bunch_threshold, line.large_threshold)
+    events = detect_bunching(payload, line.planned_headway_min, line.bunch_threshold, line.large_threshold,
+                             line.early_tolerance_min, line.late_tolerance_min)
     data = events_to_dicts(events)
     report = BunchReport(line_id=line_id, stop_name=stop_name or "*", created_at=datetime.utcnow(),
                          summary_json=json.dumps(data, ensure_ascii=False))

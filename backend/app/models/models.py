@@ -11,6 +11,8 @@ class Line(Base):
     planned_headway_min: Mapped[float] = mapped_column(Float, default=8.0)
     bunch_threshold: Mapped[float] = mapped_column(Float, default=3.0)
     large_threshold: Mapped[float] = mapped_column(Float, default=15.0)
+    early_tolerance_min: Mapped[float] = mapped_column(Float, default=0.0)
+    late_tolerance_min: Mapped[float] = mapped_column(Float, default=0.0)
     trips: Mapped[list["Trip"]] = relationship(back_populates="line")
 
 class Trip(Base):
@@ -29,6 +31,7 @@ class Arrival(Base):
     trip_id: Mapped[int] = mapped_column(ForeignKey("trips.id"))
     stop_name: Mapped[str] = mapped_column(String(64))
     stop_seq: Mapped[int] = mapped_column(Integer)
+    planned_arrive: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     actual_arrive: Mapped[datetime] = mapped_column(DateTime)
     trip: Mapped["Trip"] = relationship(back_populates="arrivals")
 
