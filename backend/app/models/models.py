@@ -11,6 +11,8 @@ class Line(Base):
     planned_headway_min: Mapped[float] = mapped_column(Float, default=8.0)
     bunch_threshold: Mapped[float] = mapped_column(Float, default=3.0)
     large_threshold: Mapped[float] = mapped_column(Float, default=15.0)
+    early_tolerance_min: Mapped[float] = mapped_column(Float, default=0.0)
+    late_tolerance_min: Mapped[float] = mapped_column(Float, default=0.0)
     trips: Mapped[list["Trip"]] = relationship(back_populates="line")
 
 class Trip(Base):

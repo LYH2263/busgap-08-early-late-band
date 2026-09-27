@@ -9,6 +9,7 @@
   --bg-amber: #ffb020;
   --bg-red: #ff4d6d;
   --bg-ok: #3dd68c;
+  --bg-violet: #a78bfa;
 }
 
 * { box-sizing: border-box; }
@@ -133,6 +134,8 @@ h1 { margin: 0 0 0.25rem; font-size: 1.25rem; font-weight: 700; }
 }
 .bg-gap-strip.bg-bunch { border-top-color: var(--bg-red); }
 .bg-gap-strip.bg-large { border-top-color: var(--bg-amber); }
+.bg-gap-strip.bg-dev { border-top-color: var(--bg-violet); }
+.strip-suggest { margin: 0.2rem 0 0; line-height: 1.4; }
 .bg-gap-strip header {
   padding: 0.65rem 0.7rem 0.4rem;
   font-size: 0.8rem; font-weight: 700;
@@ -163,12 +166,27 @@ th { color: var(--bg-dim); font-weight: 600; font-size: 0.78rem; }
 .badge-ok { background: rgba(61,214,140,0.18); color: var(--bg-ok); }
 .badge-warn { background: rgba(255,176,32,0.18); color: var(--bg-amber); }
 .badge-bad { background: rgba(255,77,109,0.18); color: var(--bg-red); }
+.badge-dev { background: rgba(167,139,250,0.18); color: var(--bg-violet); }
 .btn {
   background: var(--bg-cyan); color: #041018; border: none;
   padding: 0.45rem 0.95rem; font-weight: 700; cursor: pointer; font-size: 0.85rem;
 }
 .btn:hover { filter: brightness(1.08); }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-sm { padding: 0.25rem 0.7rem; font-size: 0.78rem; }
+.band-input {
+  width: 5.2rem; background: #0a1c29; color: var(--bg-text);
+  border: 1px solid var(--bg-edge); padding: 0.28rem 0.4rem; font-size: 0.84rem;
+}
+.band-input:focus { outline: 1px solid var(--bg-cyan); }
+.save-ok { margin-left: 0.5rem; color: var(--bg-ok); font-size: 0.76rem; }
+.band-hint { margin: 0.7rem 0 0; font-size: 0.78rem; line-height: 1.5; }
+.report-actions { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem; }
+.report-count { font-size: 0.85rem; }
+.report-h2 {
+  margin: 1rem 0 0.6rem; font-size: 0.9rem; letter-spacing: 0.04em;
+  color: var(--bg-cyan); text-transform: uppercase;
+}
 .muted { color: var(--bg-dim); }
 .stat { font-size: 1.55rem; font-weight: 800; }
 

@@ -21,10 +21,17 @@ def run_detection(line_id: int, stop_name: str | None = None, db: Session = Depe
     trips = db.scalars(select(Trip).where(Trip.line_id == line_id)).all()
     trip_ids = [t.id for t in trips]
     trip_no_map = {t.id: t.trip_no for t in trips}
+    depart_map = {t.id: t.planned_depart for t in trips}
     arrivals = db.scalars(select(Arrival).where(Arrival.trip_id.in_(trip_ids))).all()
-    payload = [{"stop_name": a.stop_name, "trip_no": trip_no_map[a.trip_id], "actual_arrive": a.actual_arrive}
-               for a in arrivals if stop_name is None or a.stop_name == stop_name]
-    events = detect_bunching(payload, line.planned_headway_min, line.bunch_threshold, line.large_threshold)
+    # 始终传入全程到站，沿途计划走行（中位数）才能从完整站序推断；最后再按站过滤事件。
+    payload = [{"stop_name": a.stop_name, "trip_no": trip_no_map[a.trip_id],
+                "actual_arrive": a.actual_arrive, "scheduled": depart_map[a.trip_id],
+                "stop_seq": a.stop_seq} for a in arrivals]
+    events = detect_bunching(payload, line.planned_headway_min, line.bunch_threshold,
+                             line.large_threshold, line.early_tolerance_min,
+                             line.late_tolerance_min)
+    if stop_name is not None:
+        events = [e for e in events if e.stop_name == stop_name]
     data = events_to_dicts(events)
     report = BunchReport(line_id=line_id, stop_name=stop_name or "*", created_at=datetime.utcnow(),
                          summary_json=json.dumps(data, ensure_ascii=False))
